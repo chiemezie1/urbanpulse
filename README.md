@@ -1,6 +1,15 @@
 # UrbanPulse – Smart City Community Platform
 
-![UrbanPulse Logo](/public/images/logo_no_text.jpeg)
+
+<div align="center">
+  <a href="https://github.com/chiemezie1/urbanpulse.git">
+    <img src='/public/images/logo_no_text.jpeg' alt="UrbanPulse Logo" width="80" height="80">
+  </a>
+  <h3 align="center">UrbanPulse</h3>
+  <p align="center">
+    A smart city platform that connects residents with real-time information about traffic, weather, and community updates.
+  </p>
+</div
 
 ## Overview
 
