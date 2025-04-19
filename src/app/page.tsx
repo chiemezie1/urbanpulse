@@ -103,7 +103,7 @@ export default function Home() {
                 <div className="relative w-full max-w-[500px] aspect-square rounded-xl overflow-hidden border shadow-xl">
                   <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-emerald-500/0 z-10"></div>
                   <Image
-                    src="/placeholder.svg?height=500&width=500&text=Connected+Community"
+                    src="/images/four_people_of_family.jpeg"
                     alt="Connected Community"
                     width={500}
                     height={500}
@@ -303,7 +303,7 @@ export default function Home() {
                 <CardContent>
                   <div className="relative h-40 w-full mb-4 rounded-md overflow-hidden">
                     <Image
-                      src="/placeholder.svg?height=200&width=300&text=Weather+Forecast"
+                      src="/images/lady_in_car_using_app.jpeg"
                       alt="Weather forecast"
                       fill
                       className="object-cover"
@@ -329,7 +329,7 @@ export default function Home() {
                 <CardContent>
                   <div className="relative h-40 w-full mb-4 rounded-md overflow-hidden">
                     <Image
-                      src="/placeholder.svg?height=200&width=300&text=Community+Discussion"
+                      src="/images/lady_setting_down_using_app.jpeg"
                       alt="Community discussion"
                       fill
                       className="object-cover"
@@ -402,7 +402,7 @@ export default function Home() {
                 <div className="relative w-full max-w-[500px] aspect-video rounded-xl overflow-hidden border shadow-xl">
                   <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-emerald-500/0 z-10"></div>
                   <Image
-                    src="/placeholder.svg?height=300&width=500&text=UrbanPulse+Interface"
+                    src="/images/guy_on_road_using_app.jpeg"
                     alt="UrbanPulse Interface"
                     width={500}
                     height={300}

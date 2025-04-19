@@ -64,7 +64,7 @@ export default function AboutPage() {
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <Image
-                  src="/placeholder.svg?height=400&width=600&text=Team+Meeting"
+                  src="/images/four_people_of_family.jpeg"
                   alt="UrbanPulse team meeting"
                   width={600}
                   height={400}
@@ -185,22 +185,22 @@ export default function AboutPage() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
                 {
-                  name: "Alex Johnson",
+                  name: "Peter Johnson",
                   role: "Founder & CEO",
                   bio: "Former urban planner with a passion for technology and community building.",
-                  image: "/placeholder.svg?height=300&width=300&text=AJ"
+                  image: "/images/peter.jpeg"
                 },
                 {
-                  name: "Maya Rodriguez",
+                  name: "Sunday Rodriguez",
                   role: "Chief Technology Officer",
                   bio: "Software engineer with expertise in location-based services and real-time data systems.",
-                  image: "/placeholder.svg?height=300&width=300&text=MR"
+                  image: "/images/sunday.jpeg"
                 },
                 {
                   name: "David Chen",
                   role: "Head of Product",
                   bio: "Product leader focused on creating intuitive, impactful user experiences.",
-                  image: "/placeholder.svg?height=300&width=300&text=DC"
+                  image: "/images/lady_eating_using_app.jpeg"
                 },
                 {
                   name: "Sarah Williams",

@@ -17,6 +17,8 @@ export default async function DashboardLayout({ children }: { children: React.Re
       <DashboardHeader />
       <div className="flex flex-1">
         <DashboardNav />
+        {/* Spacer div to compensate for the fixed sidebar */}
+        <div className="hidden md:block md:w-64 shrink-0" />
         <main className="flex-1 overflow-y-auto p-4 md:p-6">{children}</main>
       </div>
     </div>

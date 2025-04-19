@@ -1,13 +1,13 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { 
-  MapPin, 
-  Users, 
-  AlertTriangle, 
-  Settings, 
-  BarChart, 
+import {
+  Users,
+  AlertTriangle,
+  Settings,
+  BarChart,
   LogOut,
   Menu,
   X
@@ -60,13 +60,13 @@ export function AdminSidebar() {
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-40 w-64 bg-background border-r transform transition-transform duration-200 ease-in-out md:translate-x-0",
+          "fixed inset-y-0 left-0 z-40 w-64 bg-background border-r transform transition-transform duration-200 ease-in-out md:translate-x-0 overflow-y-auto",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
         <div className="flex flex-col h-full">
           <div className="flex items-center gap-2 px-6 py-4 border-b">
-            <MapPin className="h-6 w-6 text-emerald-500" />
+            <Image src="/images/logo_no_text.jpeg" alt="UrbanPulse Logo" width={32} height={32} className="rounded-sm" />
             <span className="text-xl font-bold">UrbanPulse</span>
           </div>
 

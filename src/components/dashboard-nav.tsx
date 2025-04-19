@@ -1,10 +1,11 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { MapPin, Home, Map, AlertTriangle, Cloud, Search, Users, Settings, HelpCircle, Newspaper, Shield } from "lucide-react"
+import { Home, Map, AlertTriangle, Cloud, Search, Users, Settings, HelpCircle, Newspaper, Shield } from "lucide-react"
 import { useSession } from "next-auth/react"
 
 const navItems = [
@@ -60,11 +61,11 @@ export function DashboardNav() {
   const { data: session } = useSession()
 
   return (
-    <nav className="hidden border-r bg-background md:block md:w-64">
-      <div className="flex h-full flex-col gap-2 p-4">
+    <nav className="hidden border-r bg-background md:block md:w-64 md:fixed md:top-16 md:bottom-0 md:left-0 md:z-20">
+      <div className="flex h-full flex-col gap-2 p-4 overflow-y-auto">
         <div className="flex h-14 items-center border-b px-4">
           <Link href="/dashboard" className="flex items-center gap-2 font-semibold">
-            <MapPin className="h-6 w-6 text-emerald-500" />
+            <Image src="/images/logo_no_text.jpeg" alt="UrbanPulse Logo" width={24} height={24} className="rounded-sm" />
             <span>Navigation</span>
           </Link>
         </div>

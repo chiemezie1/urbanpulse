@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { MapPin } from "lucide-react"
+import Image from "next/image"
 import { LocationDisplay } from "@/components/location-display"
 
 export function SiteFooter() {
@@ -9,7 +9,7 @@ export function SiteFooter() {
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <MapPin className="h-6 w-6 text-emerald-500" />
+              <Image src="/images/logo_no_text.jpeg" alt="UrbanPulse Logo" width={32} height={32} className="rounded-sm" />
               <span className="text-xl font-bold">UrbanPulse</span>
             </div>
             <p className="text-sm text-muted-foreground max-w-xs">
@@ -38,7 +38,7 @@ export function SiteFooter() {
               </Link>
             </div>
           </div>
-          
+
           <div className="space-y-4">
             <h4 className="text-base font-medium">Features</h4>
             <ul className="space-y-2 text-sm">
@@ -64,7 +64,7 @@ export function SiteFooter() {
               </li>
             </ul>
           </div>
-          
+
           <div className="space-y-4">
             <h4 className="text-base font-medium">Resources</h4>
             <ul className="space-y-2 text-sm">
@@ -90,7 +90,7 @@ export function SiteFooter() {
               </li>
             </ul>
           </div>
-          
+
           <div className="space-y-4">
             <h4 className="text-base font-medium">Company</h4>
             <ul className="space-y-2 text-sm">
@@ -117,7 +117,7 @@ export function SiteFooter() {
             </ul>
           </div>
         </div>
-        
+
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 border-t border-muted pt-8 mt-8">
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} UrbanPulse. All rights reserved.

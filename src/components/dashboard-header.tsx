@@ -1,8 +1,9 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { MapPin, Bell, Menu, Sun, Moon, LogOut } from "lucide-react"
+import { Bell, Menu, Sun, Moon, LogOut } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useTheme } from "next-themes"
 import { useState, useEffect } from "react"
@@ -45,14 +46,14 @@ export function DashboardHeader() {
         </SheetTrigger>
         <SheetContent side="left" className="w-72">
           <div className="flex items-center gap-2 pb-4 pt-2">
-            <MapPin className="h-6 w-6 text-emerald-500" />
+            <Image src="/images/logo_no_text.jpeg" alt="UrbanPulse Logo" width={32} height={32} className="rounded-sm" />
             <span className="text-xl font-bold">UrbanPulse</span>
           </div>
           <DashboardNav />
         </SheetContent>
       </Sheet>
       <Link href="/dashboard" className="flex items-center gap-2 md:mr-4">
-        <MapPin className="h-6 w-6 text-emerald-500" />
+        <Image src="/images/logo_no_text.jpeg" alt="UrbanPulse Logo" width={32} height={32} className="rounded-sm" />
         <span className="text-xl font-bold hidden md:inline-block">UrbanPulse</span>
       </Link>
       <div className="flex-1"></div>

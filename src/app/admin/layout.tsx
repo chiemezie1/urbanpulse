@@ -15,6 +15,8 @@ export default function AdminLayout({
   return (
     <div className="flex min-h-screen bg-muted/20">
       <AdminSidebar />
+      {/* Spacer div to compensate for the fixed sidebar */}
+      <div className="hidden md:block md:w-64 shrink-0" />
       <div className="flex-1">
         <AdminHeader />
         <main className="p-6">{children}</main>

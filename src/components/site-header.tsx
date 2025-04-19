@@ -1,8 +1,9 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { MapPin, Menu, X, Shield, LogOut } from "lucide-react"
+import { Menu, X, Shield, LogOut } from "lucide-react"
 import { LocationDisplay } from "@/components/location-display"
 import { useState } from "react"
 import { useSession, signOut } from "next-auth/react"
@@ -25,11 +26,11 @@ export function SiteHeader() {
       <div className="container flex items-center justify-between py-4">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center gap-2">
-            <MapPin className="h-6 w-6 text-emerald-500" />
+            <Image src="/images/logo_no_text.jpeg" alt="UrbanPulse Logo" width={32} height={32} className="rounded-sm" />
             <span className="text-xl font-bold">UrbanPulse</span>
           </Link>
         </div>
-        
+
         <nav className="hidden md:flex items-center gap-6">
           <Link href="/#features" className="text-sm font-medium hover:text-emerald-500 transition-colors">
             Features
@@ -44,12 +45,12 @@ export function SiteHeader() {
             About Us
           </Link>
         </nav>
-        
+
         <div className="flex items-center gap-4">
           <div className="hidden sm:block">
             <LocationDisplay />
           </div>
-          
+
           {session?.user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -105,7 +106,7 @@ export function SiteHeader() {
               </Link>
             </>
           )}
-          
+
           <button
             className="md:hidden"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -119,7 +120,7 @@ export function SiteHeader() {
           </button>
         </div>
       </div>
-      
+
       {/* Mobile menu */}
       {mobileMenuOpen && (
         <div className="md:hidden py-4 px-4 border-t">
