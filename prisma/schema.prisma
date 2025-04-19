@@ -1,0 +1,421 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                                          String           @id @default(cuid())
+  name                                        String?
+  email                                       String           @unique
+  emailVerified                               DateTime?
+  image                                       String?
+  password                                    String
+  bio                                         String?
+  createdAt                                   DateTime         @default(now())
+  locationId                                  String
+  role                                        User_role        @default(RESIDENT)
+  updatedAt                                   DateTime         @updatedAt
+  username                                    String           @unique
+  accounts                                    Account[]
+  Comment                                     Comment[]
+  CommunityMember                             CommunityMember[]
+  Follow_Follow_followerIdToUser              Follow[]         @relation("Follow_followerIdToUser")
+  Follow_Follow_followingIdToUser             Follow[]         @relation("Follow_followingIdToUser")
+  Incident                                    Incident[]
+  IncidentReport                              IncidentReport[]
+  likes                                       Like[]
+  Notification_Notification_recipientIdToUser Notification[]   @relation("Notification_recipientIdToUser")
+  Notification_Notification_senderIdToUser    Notification[]   @relation("Notification_senderIdToUser")
+  Post                                        Post[]
+  SavedPOI                                    SavedPOI[]
+  sessions                                    Session[]
+  Location                                    Location         @relation(fields: [locationId], references: [id])
+  WeatherAlert                                WeatherAlert[]
+
+  @@index([locationId], map: "User_locationId_fkey")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId], map: "Account_userId_fkey")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "Session_userId_fkey")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Incident {
+  id             String            @id @default(cuid())
+  title          String
+  description    String            @db.Text
+  type           Incident_type
+  severity       Incident_severity
+  status         Incident_status   @default(REPORTED)
+  reporterId     String
+  locationId     String
+  coordinatesId  String
+  imageUrl       String?           @db.Text
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  resolvedAt     DateTime?
+  Coordinates    Coordinates       @relation(fields: [coordinatesId], references: [id])
+  Location       Location          @relation(fields: [locationId], references: [id])
+  User           User              @relation(fields: [reporterId], references: [id])
+  IncidentReport IncidentReport[]
+
+  @@index([coordinatesId], map: "Incident_coordinatesId_fkey")
+  @@index([locationId], map: "Incident_locationId_fkey")
+  @@index([reporterId], map: "Incident_reporterId_fkey")
+}
+
+model Post {
+  id            String       @id @default(cuid())
+  content       String       @db.Text
+  authorId      String
+  locationId    String
+  category      String
+  communityId   String?
+  coordinatesId String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  imageUrl      String?      @db.Text
+  isPublic      Boolean      @default(true)
+  comments      Comment[]
+  likes         Like[]
+  User          User         @relation(fields: [authorId], references: [id])
+  Coordinates   Coordinates? @relation(fields: [coordinatesId], references: [id])
+  Location      Location     @relation(fields: [locationId], references: [id])
+
+  @@index([authorId], map: "Post_authorId_fkey")
+  @@index([coordinatesId], map: "Post_coordinatesId_fkey")
+  @@index([locationId], map: "Post_locationId_fkey")
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  postId    String
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User     @relation(fields: [authorId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([authorId], map: "Comment_authorId_fkey")
+  @@index([postId], map: "Comment_postId_fkey")
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  postId    String
+  userId    String
+  createdAt DateTime @default(now())
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([postId, userId])
+  @@index([userId], map: "Like_userId_fkey")
+}
+
+model AirQualityData {
+  id         String   @id @default(cuid())
+  locationId String
+  aqi        Int
+  pm25       Float?
+  pm10       Float?
+  o3         Float?
+  no2        Float?
+  so2        Float?
+  co         Float?
+  category   String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Coordinates {
+  id        String     @id @default(cuid())
+  latitude  Float
+  longitude Float
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Incident  Incident[]
+  Location  Location[]
+  POI       POI[]
+  Post      Post[]
+
+  @@index([latitude, longitude])
+}
+
+model Follow {
+  id                            String   @id @default(cuid())
+  followerId                    String
+  followingId                   String
+  createdAt                     DateTime @default(now())
+  User_Follow_followerIdToUser  User     @relation("Follow_followerIdToUser", fields: [followerId], references: [id])
+  User_Follow_followingIdToUser User     @relation("Follow_followingIdToUser", fields: [followingId], references: [id])
+
+  @@unique([followerId, followingId])
+  @@index([followingId], map: "Follow_followingId_fkey")
+}
+
+model IncidentReport {
+  id          String   @id @default(cuid())
+  incidentId  String
+  reporterId  String
+  description String   @db.Text
+  imageUrl    String?  @db.Text
+  createdAt   DateTime @default(now())
+  Incident    Incident @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+  User        User     @relation(fields: [reporterId], references: [id])
+
+  @@index([incidentId], map: "IncidentReport_incidentId_fkey")
+  @@index([reporterId], map: "IncidentReport_reporterId_fkey")
+}
+
+model Location {
+  id            String       @id @default(cuid())
+  city          String
+  state         String?
+  country       String
+  address       String?
+  coordinatesId String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  Community     Community[]
+  Incident      Incident[]
+  Coordinates   Coordinates? @relation(fields: [coordinatesId], references: [id])
+  POI           POI[]
+  Post          Post[]
+  User          User[]
+
+  @@index([coordinatesId], map: "Location_coordinatesId_fkey")
+}
+
+model Notification {
+  id                                  String            @id @default(cuid())
+  recipientId                         String
+  senderId                            String?
+  type                                Notification_type
+  content                             String            @db.Text
+  isRead                              Boolean           @default(false)
+  relatedId                           String?
+  createdAt                           DateTime          @default(now())
+  User_Notification_recipientIdToUser User              @relation("Notification_recipientIdToUser", fields: [recipientId], references: [id])
+  User_Notification_senderIdToUser    User?             @relation("Notification_senderIdToUser", fields: [senderId], references: [id])
+
+  @@index([recipientId], map: "Notification_recipientId_fkey")
+  @@index([senderId], map: "Notification_senderId_fkey")
+}
+
+model POI {
+  id            String      @id @default(cuid())
+  name          String
+  description   String?     @db.Text
+  type          POI_type
+  locationId    String
+  coordinatesId String
+  address       String?
+  phone         String?
+  website       String?
+  openingHours  String?
+  imageUrl      String?     @db.Text
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  Coordinates   Coordinates @relation(fields: [coordinatesId], references: [id])
+  Location      Location    @relation(fields: [locationId], references: [id])
+  SavedPOI      SavedPOI[]
+
+  @@index([coordinatesId], map: "POI_coordinatesId_fkey")
+  @@index([locationId], map: "POI_locationId_fkey")
+}
+
+model SavedPOI {
+  id        String   @id @default(cuid())
+  poiId     String
+  userId    String
+  createdAt DateTime @default(now())
+  POI       POI      @relation(fields: [poiId], references: [id], onDelete: Cascade)
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([poiId, userId])
+  @@index([userId], map: "SavedPOI_userId_fkey")
+}
+
+model SearchHistory {
+  id        String   @id @default(cuid())
+  userId    String
+  query     String
+  createdAt DateTime @default(now())
+  type      String
+}
+
+model UserPreferences {
+  id                   String   @id @default(cuid())
+  userId               String   @unique
+  darkMode             Boolean  @default(false)
+  highContrastMode     Boolean  @default(false)
+  notificationsEnabled Boolean  @default(true)
+  emailNotifications   Boolean  @default(true)
+  pushNotifications    Boolean  @default(true)
+  locationSharing      Boolean  @default(true)
+  language             String   @default("en")
+  radius               Int      @default(10)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model WeatherAlert {
+  id          String   @id @default(cuid())
+  userId      String
+  type        String
+  description String   @db.Text
+  severity    String
+  isRead      Boolean  @default(false)
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+  User        User     @relation(fields: [userId], references: [id])
+
+  @@index([userId], map: "WeatherAlert_userId_fkey")
+}
+
+model WeatherData {
+  id            String   @id @default(cuid())
+  locationId    String
+  temperature   Float
+  humidity      Float?
+  windSpeed     Float?
+  windDirection String?
+  conditions    String
+  icon          String?
+  forecast      Json?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+enum Incident_type {
+  TRAFFIC
+  ROAD_CLOSURE
+  CONSTRUCTION
+  ACCIDENT
+  FLOOD
+  FIRE
+  POWER_OUTAGE
+  PUBLIC_EVENT
+  OTHER
+}
+
+enum Notification_type {
+  LIKE
+  COMMENT
+  FOLLOW
+  MENTION
+  INCIDENT
+  WEATHER
+  SYSTEM
+}
+
+enum POI_type {
+  RESTAURANT
+  CAFE
+  HOSPITAL
+  PHARMACY
+  GAS_STATION
+  POLICE_STATION
+  FIRE_STATION
+  SCHOOL
+  PARK
+  SHOPPING
+  ENTERTAINMENT
+  TRANSPORTATION
+  HOTEL
+  OTHER
+}
+
+enum Incident_severity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum Incident_status {
+  REPORTED
+  VERIFIED
+  IN_PROGRESS
+  RESOLVED
+  REJECTED
+}
+
+enum User_role {
+  RESIDENT
+  TOURIST
+  URBAN_PLANNER
+  EMERGENCY_RESPONDER
+  ADMIN
+}
+
+enum CommunityRole {
+  MEMBER
+  ADMIN
+}
+
+model Community {
+  id          String            @id @default(cuid())
+  name        String
+  description String            @db.Text
+  locationId  String
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  members     CommunityMember[]
+  location    Location          @relation(fields: [locationId], references: [id])
+
+  @@index([locationId], map: "Community_locationId_fkey")
+}
+
+model CommunityMember {
+  id          String        @id @default(cuid())
+  communityId String
+  userId      String
+  role        CommunityRole @default(MEMBER)
+  joinedAt    DateTime      @default(now())
+  community   Community     @relation(fields: [communityId], references: [id], onDelete: Cascade)
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([communityId, userId])
+  @@index([userId], map: "CommunityMember_userId_fkey")
+}
