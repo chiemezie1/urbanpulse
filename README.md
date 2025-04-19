@@ -1,6 +1,3 @@
-# UrbanPulse – Smart City Community Platform
-
-
 <div align="center">
   <a href="https://github.com/chiemezie1/urbanpulse.git">
     <img src='/public/images/logo_no_text.jpeg' alt="UrbanPulse Logo" width="80" height="80">
