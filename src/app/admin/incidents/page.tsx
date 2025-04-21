@@ -300,7 +300,7 @@ export default function IncidentsPage() {
       case "IN_PROGRESS":
         return "secondary"
       case "RESOLVED":
-        return "success"
+        return "secondary" // Changed from "success" to "secondary"
       case "REJECTED":
         return "destructive"
       default:

@@ -7,10 +7,9 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
-import { Users, MapPin, MessageCircle, Settings, Shield, UserPlus, LogOut, Send, Loader2 } from "lucide-react"
+import { Users, MapPin, MessageCircle, Settings, UserPlus, LogOut, Send, Loader2 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 
 interface CommunityDetailsProps {
@@ -78,7 +77,7 @@ export function CommunityDetails({ communityId }: CommunityDetailsProps) {
       })
 
       if (response.ok) {
-        const updatedCommunity = await response.json()
+        await response.json() // We don't need the response data
         setCommunity({
           ...community,
           isMember: true,
@@ -501,7 +500,7 @@ export function CommunityDetails({ communityId }: CommunityDetailsProps) {
                         {/* Comments display */}
                         {post.comments && post.comments.length > 0 && (
                           <div className="w-full space-y-2 border-t pt-2">
-                            {post.comments.map((comment) => (
+                            {post.comments.map((comment: { id: string; author?: { image?: string; name?: string }; content: string; createdAt: string }) => (
                               <div key={comment.id} className="flex gap-2">
                                 <Avatar className="h-6 w-6">
                                   <AvatarImage src={comment.author?.image || ""} alt={comment.author?.name || "User"} />

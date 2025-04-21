@@ -81,8 +81,13 @@ export function CityMap() {
   }
 
   useEffect(() => {
-    // Import Leaflet CSS
-    import("leaflet/dist/leaflet.css")
+    // Add Leaflet CSS to the document head
+    const link = document.createElement('link')
+    link.rel = 'stylesheet'
+    link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'
+    link.integrity = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY='
+    link.crossOrigin = ''
+    document.head.appendChild(link)
 
     // Set map as ready after a short delay to ensure CSS is loaded
     const timer = setTimeout(() => {
@@ -91,7 +96,11 @@ export function CityMap() {
       getUserLocation()
     }, 500)
 
-    return () => clearTimeout(timer)
+    return () => {
+      clearTimeout(timer)
+      // Remove the CSS when component unmounts
+      document.head.removeChild(link)
+    }
   }, [])
 
   useEffect(() => {
@@ -165,43 +174,7 @@ export function CityMap() {
     }))
   }
 
-  const getMarkerIcon = (type: string, severity?: string) => {
-    // In a real implementation, we would return custom Leaflet icons
-    // For this example, we'll just return a class name for styling
-    switch (type) {
-      case "traffic":
-      case "construction":
-      case "alert":
-        return severity === "high" ? "text-red-500" : severity === "medium" ? "text-amber-500" : "text-blue-500"
-      case "restaurant":
-        return "text-amber-500"
-      case "hospital":
-        return "text-blue-500"
-      case "shopping":
-        return "text-emerald-500"
-      default:
-        return "text-gray-500"
-    }
-  }
-
-  const getMarkerComponent = (type: string) => {
-    switch (type) {
-      case "traffic":
-        return <AlertTriangle className="h-4 w-4" />
-      case "construction":
-        return <AlertTriangle className="h-4 w-4" />
-      case "alert":
-        return <AlertTriangle className="h-4 w-4" />
-      case "restaurant":
-        return <Coffee className="h-4 w-4" />
-      case "hospital":
-        return <Hospital className="h-4 w-4" />
-      case "shopping":
-        return <ShoppingBag className="h-4 w-4" />
-      default:
-        return <AlertTriangle className="h-4 w-4" />
-    }
-  }
+  // Removed unused marker icon and component functions
 
   const shouldShowMarker = (type: string) => {
     if (type === "traffic" || type === "construction" || type === "alert" || type === "info") {

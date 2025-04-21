@@ -1,11 +1,17 @@
 "use client"
 
 import type React from "react"
+import type { Session } from "next-auth"
 
 import { SessionProvider, useSession } from "next-auth/react"
 import { createContext, useContext } from "react"
 
-const AuthContext = createContext({
+type AuthContextType = {
+  user: Session['user'] | null;
+  loading: boolean;
+}
+
+const AuthContext = createContext<AuthContextType>({
   user: null,
   loading: true,
 })

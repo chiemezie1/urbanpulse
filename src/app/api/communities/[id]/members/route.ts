@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 // GET /api/communities/[id]/members - Get all members of a community
 export async function GET(
-  request: Request,
+  _request: Request, // Prefix with underscore to indicate it's not used
   { params }: { params: { id: string } }
 ) {
   try {
@@ -28,7 +28,7 @@ export async function GET(
     const members = await prisma.communityMember.findMany({
       where: { communityId },
       include: {
-        User: true
+        user: true
       }
     })
 
@@ -39,10 +39,10 @@ export async function GET(
       role: member.role,
       joinedAt: member.joinedAt.toISOString(),
       user: {
-        id: member.User.id,
-        name: member.User.name,
-        image: member.User.image,
-        email: member.User.email
+        id: member.user.id,
+        name: member.user.name,
+        image: member.user.image,
+        email: member.user.email
       }
     }))
 
@@ -58,7 +58,7 @@ export async function GET(
 
 // POST /api/communities/[id]/members - Join a community
 export async function POST(
-  request: Request,
+  _request: Request, // Prefix with underscore to indicate it's not used
   { params }: { params: { id: string } }
 ) {
   try {
@@ -78,7 +78,7 @@ export async function POST(
     const community = await prisma.community.findUnique({
       where: { id: communityId },
       include: {
-        Location: true
+        location: true
       }
     })
 
@@ -119,10 +119,10 @@ export async function POST(
     const updatedCommunity = await prisma.community.findUnique({
       where: { id: communityId },
       include: {
-        Location: true,
+        location: true,
         members: {
           include: {
-            User: true
+            user: true
           }
         }
       }
@@ -134,7 +134,7 @@ export async function POST(
       name: updatedCommunity!.name,
       description: updatedCommunity!.description,
       locationId: updatedCommunity!.locationId,
-      locationName: [updatedCommunity!.Location?.city, updatedCommunity!.Location?.state, updatedCommunity!.Location?.country]
+      locationName: [updatedCommunity!.location?.city, updatedCommunity!.location?.state, updatedCommunity!.location?.country]
                    .filter(Boolean).join(', '),
       memberCount: updatedCommunity!.members.length,
       isAdmin: false,
@@ -154,7 +154,7 @@ export async function POST(
 
 // DELETE /api/communities/[id]/members - Leave a community
 export async function DELETE(
-  request: Request,
+  _request: Request, // Prefix with underscore to indicate it's not used
   { params }: { params: { id: string } }
 ) {
   try {

@@ -4,8 +4,6 @@ import Link from "next/link"
 import Image from "next/image"
 import {
   ArrowRight,
-  MapPin,
-  Users,
   Heart,
   Lightbulb,
   Target,
@@ -13,8 +11,6 @@ import {
   Clock,
   Globe,
   Mail,
-  ExternalLink,
-  ChevronRight,
   Building
 } from "lucide-react"
 

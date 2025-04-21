@@ -55,7 +55,7 @@ export default function WeatherPage() {
               const { latitude, longitude } = position.coords
 
               // Convert coordinates to city name using reverse geocoding with Geoapify
-              const API_KEY = process.env.NEXT_PUBLIC_GEOAPIFY_API_KEY || "d50176a2ddc242388395c31e6ae2c566";
+              const API_KEY = process.env.NEXT_PUBLIC_GEOAPIFY_API_KEY || "defaultkey";
               const response = await fetch(
                 `https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=${API_KEY}`
               )

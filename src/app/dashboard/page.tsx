@@ -3,7 +3,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import { Skeleton } from "@/components/ui/skeleton"
 import {
   AlertTriangle,
@@ -48,7 +47,14 @@ export default function DashboardPage() {
     lng: 0
   })
   const [isLocationLoading, setIsLocationLoading] = useState(true)
-  const [notifications, setNotifications] = useState([])
+  interface Notification {
+    id: number;
+    type: string;
+    title: string;
+    time: string;
+  }
+
+  const [notifications, setNotifications] = useState<Notification[]>([])
 
   // Get user's current location
   useEffect(() => {

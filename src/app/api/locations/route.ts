@@ -10,25 +10,25 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url)
     const city = searchParams.get('city')
     const country = searchParams.get('country')
-    
+
     // Build the query based on provided parameters
     const whereClause: any = {}
-    
+
     if (city) {
       whereClause.city = city
     }
-    
+
     if (country) {
       whereClause.country = country
     }
-    
+
     const locations = await prisma.location.findMany({
       where: whereClause,
       include: {
-        coordinates: true
+        Coordinates: true
       }
     })
-    
+
     return NextResponse.json(locations)
   } catch (error) {
     console.error("Error fetching locations:", error)
@@ -43,24 +43,24 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const session = await getServerSession(authOptions)
-    
+
     if (!session) {
       return NextResponse.json(
         { error: "Unauthorized" },
         { status: 401 }
       )
     }
-    
+
     const body = await request.json()
-    const { 
-      city = "Unknown", 
-      state = "", 
-      country = "Unknown", 
+    const {
+      city = "Unknown",
+      state = "",
+      country = "Unknown",
       address = "",
       latitude = 0,
       longitude = 0
     } = body
-    
+
     // Check if location already exists
     const existingLocation = await prisma.location.findFirst({
       where: {
@@ -68,11 +68,11 @@ export async function POST(request: Request) {
         country
       }
     })
-    
+
     if (existingLocation) {
       return NextResponse.json(existingLocation)
     }
-    
+
     // Create coordinates first
     const coordinates = await prisma.coordinates.create({
       data: {
@@ -81,7 +81,7 @@ export async function POST(request: Request) {
         longitude
       }
     })
-    
+
     // Create the location
     const location = await prisma.location.create({
       data: {
@@ -93,10 +93,10 @@ export async function POST(request: Request) {
         coordinatesId: coordinates.id
       },
       include: {
-        coordinates: true
+        Coordinates: true
       }
     })
-    
+
     return NextResponse.json(location)
   } catch (error) {
     console.error("Error creating location:", error)
