@@ -29,7 +29,7 @@ UrbanPulse simplifies how people interact with their environment:
 This platform promotes transparency, safety, and community involvement, making it an essential tool for smart city living.
 
 ## Demo Video
-👉 **[Video demo](https://www.youtube.com/watch?v=dQw4w9WgXcQ)**  
+👉 **[https://youtu.be/6YDZ0gWszqg](https://www.youtube.com/watch?v=6YDZ0gWszqg)**
 
 ## How It Works
 
@@ -96,13 +96,13 @@ Visit: [http://localhost:3000](http://localhost:3000)
 UrbanPulse turns complex city data into actionable insights, it’s the ultimate companion for city residents.
 
 ## Contributing
-We welcome contributions!- See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+We welcome contributions!- See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## ARCHITECTURE
 Complete project detailes – See [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## Author
-Authors and Contributors  – See [AUTHORS.md](AUTHORS.md) for a complete list of contributors.
+Authors and Contributors  – See [AUTHORS.md](AUTHORS.md).
 
 ## License
-Licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
+Licensed under the MIT License – see [LICENSE](LICENSE).
