@@ -29,7 +29,7 @@ UrbanPulse simplifies how people interact with their environment:
 This platform promotes transparency, safety, and community involvement, making it an essential tool for smart city living.
 
 ## Demo Video
-👉 **[https://youtu.be/6YDZ0gWszqg](https://www.youtube.com/watch?v=6YDZ0gWszqg)**
+[![Video](https://img.youtube.com/vi/6YDZ0gWszqg/maxresdefault.jpg)](https://youtu.be/6YDZ0gWszqg)
 
 ## How It Works
 
